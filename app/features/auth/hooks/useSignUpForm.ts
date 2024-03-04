@@ -34,6 +34,17 @@ export const useSignUpForm = () => {
                 throw signUpError;
             }
 
+            const { error: userError } = await supabase.from("user").insert({
+                id: data.user?.id,
+                username,
+                email,
+            })
+
+            if (userError) {
+                console.log(userError.message);
+                throw userError;
+            }
+
             router.push("/auth/login");
         } catch (err) {
             if (err instanceof Error) {
