@@ -5,6 +5,7 @@ import InputField from '@/app/features/auth/components/InputField'
 import { useSignUpForm } from '@/app/features/auth/hooks/useSignUpForm'
 import React from 'react'
 import { useLoginForm } from '@/app/features/auth/hooks/useLoginForm';
+import Link from 'next/link';
 
 const Login = () => {
   const { form, onSubmit } = useLoginForm();
@@ -22,6 +23,11 @@ const Login = () => {
                 <Button type="submit" colorClass="bg-blue-500 hover:bg-blue-700">ログイン</Button>
             </div>
         </form>
+
+        <Link href="/auth/signup" className="mt-4 block text-center text-blue-400">
+          初めてご利用の方はこちら
+        </Link>
+
     </div>
   )
 }
