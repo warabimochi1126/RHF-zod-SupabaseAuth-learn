@@ -15,8 +15,6 @@ export const useSignUpForm = () => {
 
     const onSubmit: SubmitHandler<z.infer<typeof singUpFormSchema>> = (data) => {
         const { username, email, password } = data;
-
-
         console.log(username, email, password);
     }
 
