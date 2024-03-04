@@ -2,9 +2,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { signUpFormSchema } from "../lib/formSchema";
 import { SubmitHandler, useForm } from "react-hook-form"
+import { supabase } from "../lib/supabaseClient";
+import { useRouter } from "next/navigation";
 
 
 export const useSignUpForm = () => {
+    const router = useRouter();
+
     const form = useForm<z.infer<typeof signUpFormSchema>>({
         resolver: zodResolver(signUpFormSchema),
         defaultValues: {
@@ -14,9 +18,28 @@ export const useSignUpForm = () => {
         }
     });
 
-    const onSubmit: SubmitHandler<z.infer<typeof signUpFormSchema>> = (data) => {
+    const onSubmit: SubmitHandler<z.infer<typeof signUpFormSchema>> = async (data) => {
         const { username, email, password } = data;
         console.log(username, email, password);
+
+        // signUp 
+        try {
+            const { data, error: signUpError } = await supabase.auth.signUp({
+                email,
+                password
+            });
+
+            if(signUpError) {
+                console.log(signUpError);
+                throw signUpError;
+            }
+
+            router.push("/auth/login");
+        } catch (err) {
+            if (err instanceof Error) {
+                console.log(err.message);
+            }
+        }
     }
 
     return { form, onSubmit }
