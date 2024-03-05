@@ -44,7 +44,6 @@ export const useSignUpForm = () => {
             })
 
             if (userError) {
-                console.log(userError.message);
                 if (userError.message.includes("duplicate key value violates unique constraint")) {
                     setError("既に存在するユーザーです。");
                 }
