@@ -10,7 +10,6 @@ import React from 'react'
 const SignUp = () => {
   const { form, onSubmit, error } = useSignUpForm();
 
-
   return (
     <div className='mx-auto max-w-sm my-14'>
         <h2 className='text-center font-medium text-2xl mb-4'>新規登録</h2>
