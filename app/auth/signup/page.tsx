@@ -8,12 +8,13 @@ import React from 'react'
 
 
 const SignUp = () => {
-  const { form, onSubmit } = useSignUpForm();
+  const { form, onSubmit, error } = useSignUpForm();
 
 
   return (
     <div className='mx-auto max-w-sm my-14'>
         <h2 className='text-center font-medium text-2xl mb-4'>新規登録</h2>
+        <p className="text-red-500 text-center">{ error }</p>
         <form onSubmit={form.handleSubmit(onSubmit)}>
             <InputField label="ユーザ名" name="username" type="text" placeholder="ユーザー名" register={form.register}/>
             {form.formState.errors.username && <p className="text-red-500">{form.formState.errors.username?.message}</p>}

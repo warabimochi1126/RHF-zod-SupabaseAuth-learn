@@ -4,9 +4,12 @@ import { signUpFormSchema } from "../lib/formSchema";
 import { SubmitHandler, useForm } from "react-hook-form"
 import { supabase } from "../lib/supabaseClient";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 
 export const useSignUpForm = () => {
+    const [error, setError] = useState<string>("");
+
     const router = useRouter();
 
     const form = useForm<z.infer<typeof signUpFormSchema>>({
@@ -42,6 +45,7 @@ export const useSignUpForm = () => {
 
             if (userError) {
                 console.log(userError.message);
+                setError(userError.message);
                 throw userError;
             }
 
@@ -53,5 +57,5 @@ export const useSignUpForm = () => {
         }
     }
 
-    return { form, onSubmit }
+    return { form, onSubmit, error }
 }
