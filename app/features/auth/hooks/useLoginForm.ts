@@ -29,8 +29,13 @@ export const useLoginForm = () => {
             });
 
             if (signInError) {
-                console.log(signInError.message);
-                setError(signInError.message);
+                // console.log(signInError.message);
+                if (signInError.message.includes("Email not confirmed")) {
+                    setError("メールアドレスを確認してください。");
+                }
+                if (signInError.message.includes("Invalid login credentials")) {
+                    setError("そのようなユーザーは存在しません。");
+                }
                 return;
             }
 
@@ -42,5 +47,5 @@ export const useLoginForm = () => {
         }
     }
 
-    return { form, onSubmit }
+    return { form, onSubmit, error }
 }
