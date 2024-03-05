@@ -33,8 +33,8 @@ export const useSignUpForm = () => {
             });
 
             if(signUpError) {
-                console.log(signUpError);
-                throw signUpError;
+                setError(signUpError.message);
+                return;
             }
 
             const { error: userError } = await supabase.from("User").insert({
@@ -45,14 +45,16 @@ export const useSignUpForm = () => {
 
             if (userError) {
                 console.log(userError.message);
-                setError(userError.message);
-                throw userError;
+                if (userError.message.includes("duplicate key value violates unique constraint")) {
+                    setError("既に存在するユーザーです。");
+                }
+                return;
             }
 
             router.push("/auth/login");
         } catch (err) {
             if (err instanceof Error) {
-                console.log(err.message);
+                // console.log(err.message);
             }
         }
     }
