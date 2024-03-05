@@ -50,7 +50,7 @@ export const useSignUpForm = () => {
                 return;
             }
 
-            router.push("/auth/login");
+            router.push("/auth/email-confirm");
         } catch (err) {
             if (err instanceof Error) {
                 // console.log(err.message);
